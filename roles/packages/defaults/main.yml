@@ -35,6 +35,7 @@ packages_catalog:
       - minicom
       - traceroute
       - awscli2
+      - libfido2
       - go-toolset
   codeready:
     enabled: "{{ packages_codeready }}"
