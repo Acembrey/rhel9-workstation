@@ -1,0 +1,19 @@
+ansible-venv/venv
+collections/*
+roles/RedHatOfficial.rhel9_stig_gui/
+
+# ansible runtime artifacts
+*.retry
+*.log
+
+# in case setup.sh is run from other places
+__pycache__/
+*.pyc
+*.pyo
+
+# os noise
+.DS_Store
+*.swp
+*.vscode/
+.idea/
+
