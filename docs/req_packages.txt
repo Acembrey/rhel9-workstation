@@ -1,0 +1,28 @@
+vim-enhanced
+bind-utils
+git
+tmux
+wget
+jq
+rsync
+unzip
+tree
+tcpdump
+isof
+strace
+python3.12
+gcc
+make
+terraform
+terragrunt
+awscli
+aws session manager
+kubectl
+vault
+ansible-core
+helm
+skopeo
+traceroute
+glab (gitlab cli)
+minicom
+nc

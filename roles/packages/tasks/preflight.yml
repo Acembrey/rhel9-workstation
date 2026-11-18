@@ -1,0 +1,15 @@
+---
+- name: Get enabled repo IDs
+  command: dnf repolist --enabled -q
+  register: _repolist
+  changed_when: false
+
+- name: Assert repos required by enabled groups are present
+  ansible.builtin.assert:
+    that: item.1 in (_repolist.stdout_lines | map('split') | map('first') | list)
+    fail_msg: "Group '{{ item.0.key }}' needs repo '{{ item.1 }}'. Enable it in the dnf role."
+    quiet: true
+  loop: "{{ packages_catalog | dict2items | subelements('value.repos') }}"
+  loop_control:
+    label: "{{ item.0.key }} -> {{ item.1 }}"
+  when: item.0.value.enabled | bool

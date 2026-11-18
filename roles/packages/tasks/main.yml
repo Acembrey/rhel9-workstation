@@ -1,0 +1,5 @@
+- name: Preflight checks
+  import_tasks: preflight.yml
+
+- name: Install packages
+  import_tasks: install.yml

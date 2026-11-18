@@ -1,0 +1,26 @@
+---
+- name: Build RHEL 9 laptop golden image
+  hosts: laptops
+  become: true
+  gather_facts: true
+
+  vars_files:
+    - ../vars/master.yml
+
+  pre_tasks:
+    - name: Confirm target is RHEL 9
+      ansible.builtin.assert:
+        that:
+          - ansible_facts['distribution'] == 'RedHat'
+          - ansible_facts['distribution_major_version'] == '9'
+        fail_msg: >-
+          Unsupported OS: {{ ansible_facts['distribution'] }}
+          {{ ansible_facts['distribution_version'] }}
+        quiet: true
+      tags: always
+
+  roles:
+    - role: dnf
+      tags: configure-dnf
+    - role: packages
+      tags: install-packages

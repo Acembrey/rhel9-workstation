@@ -1,0 +1,24 @@
+---
+# -- dnf --
+repo_manage_rhsm: true
+repo_manage_external: true
+
+# -- allows ansible to remove repos that shouldn't be enabled --
+repo_rhsm_remove_when_disabled: true
+repo_external_remove_when_disabled: true
+
+# -- rhsm subscriptions --
+repo_enable_codeready: true
+
+# -- external repositories --
+repo_create_chrome: false
+repo_create_vscode: true 
+repo_create_hashicorp: true
+repo_create_kubernetes: true
+repo_create_1password: true
+repo_create_slack: false
+repo_create_epel: false
+
+# -- specify versions --
+repo_kubernetes_version: "v1.37"
+

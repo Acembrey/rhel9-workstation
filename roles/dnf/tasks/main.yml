@@ -1,0 +1,10 @@
+---
+- name: Manage subscription-manager repos
+  import_tasks: rhsm_repos.yml
+  when: repo_manage_rhsm | bool
+  tags: configure_rhsm_repos
+
+- name: Manage third-party repo files
+  import_tasks: external_repos.yml
+  when: repo_manage_external | bool
+  tags: configure_external_repos

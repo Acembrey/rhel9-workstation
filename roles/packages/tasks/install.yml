@@ -1,0 +1,18 @@
+- name: Collect enabled package groups
+  ansible.builtin.set_fact:
+    _enabled_groups: >-
+      {{ packages_catalog | dict2items
+         | selectattr('value.enabled')
+         | map(attribute='value') | list }}
+
+- name: Build install and repo lists from enabled groups
+  ansible.builtin.set_fact:
+    _install_list: "{{ _enabled_groups | map(attribute='packages') | flatten | unique }}"
+    _install_repos: "{{ _enabled_groups | map(attribute='repos') | flatten | unique }}"
+
+- name: Install enabled package groups
+  ansible.builtin.dnf:
+    name: "{{ _install_list }}"
+    state: present
+    disable_excludes: "{{ 'kubernetes' if 'kubernetes' in _install_repos else omit }}"
+  when: _install_list | length > 0

@@ -1,0 +1,20 @@
+---
+- name: Enable subscription repos
+  community.general.rhsm_repository:
+    name: "{{ item.key }}"
+    state: enabled
+  loop: "{{ repo_rhsm_definitions | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
+  when: item.value.enable | bool
+
+- name: Disable subscription repos toggled off
+  community.general.rhsm_repository:
+    name: "{{ item.key }}"
+    state: disabled
+  loop: "{{ repo_rhsm_definitions | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
+  when:
+    - repo_rhsm_remove_when_disabled | bool
+    - not (item.value.enable | bool)

@@ -1,0 +1,70 @@
+packages_redhat: true
+packages_codeready: false
+packages_microsoft: true
+packages_google: false
+packages_hashicorp: true
+packages_kubernetes: true
+packages_1password: true
+packages_slack: false
+packages_epel: false
+
+# third-party applications (i.e not managed by dnf)
+enable_package_terragrunt: true
+
+packages_catalog:
+  redhat:
+    enabled: "{{ packages_redhat }}"
+    repos: [rhel-9-for-x86_64-baseos-rpms, rhel-9-for-x86_64-appstream-rpms]
+    packages:
+      - tmux
+      - bind-utils
+      - jq
+      - git
+      - rsync
+      - unzip
+      - tree
+      - tcpdump
+      - lsof
+      - strace
+      - gcc
+      - python3.12
+      - python3.12-pip
+      - make
+      - skopeo
+      - nmap-ncat
+      - minicom
+      - traceroute
+      - awscli2
+      - go-toolset
+  codeready:
+    enabled: "{{ packages_codeready }}"
+    repos: [codeready-builder-for-rhel-9-x86_64-rpms]
+    packages: []
+  microsoft:
+    enabled: "{{ packages_microsoft }}"
+    repos: [vscode]
+    packages: [code]
+  google:
+    enabled: "{{ packages_google }}"
+    repos: [google-chrome]
+    packages: [google-chrome-stable]
+  hashicorp:
+    enabled: "{{ packages_hashicorp }}"
+    repos: [hashicorp]
+    packages: [terraform, vault-enterprise]
+  kubernetes:
+    enabled: "{{ packages_kubernetes }}"
+    repos: [kubernetes]
+    packages: [kubectl]
+  1password:
+    enabled: "{{ packages_1password }}"
+    repos: [1password]
+    packages: [1password, 1password-cli]
+  slack:
+    enabled: "{{ packages_slack }}"
+    repos: [slack]
+    packages: [slack]
+  epel:
+    enabled: "{{ packages_epel }}"
+    repos: []
+    packages: [helm, glab]

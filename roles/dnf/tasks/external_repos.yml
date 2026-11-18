@@ -1,0 +1,34 @@
+---
+- name: Manage repos on workstation
+  when: repo_manage_external | bool
+  block:
+    - name: Create repo files for enabled repos
+      yum_repository:
+        name: "{{ item.key }}"
+        file: "{{ item.key }}"
+        description: "{{ item.value.description }}"
+        baseurl: "{{ item.value.baseurl | default(omit) }}"
+        metalink: "{{ item.value.metalink | default(omit) }}"
+        enabled: "{{ item.value.enabled | default(true) }}"
+        gpgcheck: true
+        gpgkey: "{{ item.value.gpgkey }}"
+        owner: root
+        group: root
+        mode: "0644"
+        state: present
+      loop: "{{ repo_definitions | dict2items }}"
+      loop_control:
+        label: "{{ item.key }}"
+      when: item.value.create | bool
+
+    - name: Remove repo files for disabled repos
+      yum_repository:
+        name: "{{ item.key }}"
+        file: "{{ item.key }}"
+        state: absent
+      loop: "{{ repo_definitions | dict2items }}"
+      loop_control:
+        label: "{{ item.key }}"
+      when:
+        - repo_external_remove_when_disabled | bool
+        - not (item.value.create | bool)

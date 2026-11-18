@@ -1,0 +1,73 @@
+---
+# -- global toggles --
+repo_manage_rhsm: true
+repo_manage_external: true
+
+# -- allows ansible to remove repos that shouldn't be enabled --
+repo_rhsm_remove_when_disabled: true
+repo_external_remove_when_disabled: true
+
+# -- rhsm subscriptions --
+repo_enable_codeready: true
+
+# -- external repositories --
+repo_create_chrome: true
+repo_create_vscode: true 
+repo_create_hashicorp: true
+repo_create_kubernetes: true
+repo_create_1password: true
+repo_create_slack: true
+repo_create_epel: false
+
+# -- specify versions --
+repo_kubernetes_version: "v1.37"
+
+# -- define the toggle for enabled rhsm subscriptions, define key literally --
+repo_rhsm_definitions:
+  codeready-builder-for-rhel-9-x86_64-rpms:
+    enable: "{{ repo_enable_codeready }}"
+
+# -- define the variables for external repos, module supports more vars --
+repo_definitions:
+  google-chrome:
+    create: "{{ repo_create_chrome }}"
+    description: "Google Chrome"
+    baseurl: "https://dl.google.com/linux/chrome/rpm/stable/x86_64"
+    gpgkey: "https://dl.google.com/linux/linux_signing_key.pub"
+
+  vscode:
+    create: "{{ repo_create_vscode }}"
+    description: "Visual Studio Code"
+    baseurl: "https://packages.microsoft.com/yumrepos/vscode"
+    gpgkey: "https://packages.microsoft.com/keys/microsoft.asc"
+
+  hashicorp:
+    create: "{{ repo_create_hashicorp }}"
+    description: "HashiCorp Stable - x86_64"
+    baseurl: "https://rpm.releases.hashicorp.com/RHEL/9/x86_64/stable"
+    gpgkey: "https://rpm.releases.hashicorp.com/gpg"
+
+  kubernetes:
+    create: "{{ repo_create_kubernetes }}"
+    description: "Kubernetes {{ repo_kubernetes_version }}"
+    baseurl: "https://pkgs.k8s.io/core:/stable:/{{ repo_kubernetes_version }}/rpm/"
+    gpgkey: "https://pkgs.k8s.io/core:/stable:/{{ repo_kubernetes_version }}/rpm/repodata/repomd.xml.key"
+
+  1password:
+    create: "{{ repo_create_1password }}"
+    description: "1Password Stable Channel"
+    baseurl: "https://downloads.1password.com/linux/rpm/stable/x86_64"
+    gpgkey: "https://downloads.1password.com/linux/keys/1password.asc"
+
+  slack:
+    create: "{{ repo_create_slack }}"
+    description: "Slack"
+    baseurl: "https://packagecloud.io/slacktechnologies/slack/fedora/21/x86_64"
+    gpgkey: "https://slack.com/gpg/slack_pubkey_20220708.gpg"
+
+  epel:
+    create: "{{ repo_create_epel }}"
+    description: "Extra Packages for Enterprise Linux 9 - x86_64"
+    metalink: "https://mirrors.fedoraproject.org/metalink?repo=epel-9&arch=x86_64"
+    gpgkey: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-9"
+   
